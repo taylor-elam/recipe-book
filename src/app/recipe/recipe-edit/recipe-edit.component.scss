@@ -3,6 +3,10 @@ div.ingredient {
   margin-top: 10px;
 }
 
+img.img-responsive {
+  max-height: 300px;
+}
+
 input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched{
   border: 1px solid red;
