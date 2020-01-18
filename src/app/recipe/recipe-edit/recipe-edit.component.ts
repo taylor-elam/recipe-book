@@ -2,7 +2,7 @@ import { Component, OnInit }                                              from '
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router }                                 from '@angular/router';
 
-import { RecipesService } from '../recipe.service';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector   : 'app-recipe-edit',
@@ -15,7 +15,7 @@ export class RecipeEditComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private recipesService: RecipesService,
+    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -38,7 +38,7 @@ export class RecipeEditComponent implements OnInit {
     let recipeName          = '';
 
     if (this.isEditMode === true) {
-      const recipe      = this.recipesService.getRecipe(this.id);
+      const recipe      = this.recipeService.getRecipe(this.id);
       recipeDescription = recipe.description;
       recipeImagePath   = recipe.imagePath;
       recipeName        = recipe.name;
@@ -92,9 +92,9 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit(): void {
     if (this.isEditMode === true) {
-      this.recipesService.updateRecipe(this.id, this.recipeForm.value);
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
     } else {
-      this.recipesService.addRecipe(this.recipeForm.value);
+      this.recipeService.addRecipe(this.recipeForm.value);
     }
   }
 }

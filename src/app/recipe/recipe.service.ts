@@ -6,7 +6,7 @@ import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe }              from './recipe.model';
 
 @Injectable({ providedIn: 'root' })
-export class RecipesService {
+export class RecipeService {
   recipesUpdated = new Subject<Recipe[]>();
   private _recipes: Recipe[] = [];
 
