@@ -17,7 +17,7 @@
                  id="amount"
                  name="amount"
                  ngModel
-                 pattern="^[1-9]+[0-9]*(.[0-9]+)?$"
+                 pattern="^[1-9]+[0-9]*(\.[0-9]+)?|0\.[0-9]+$"
                  required
                  type="number">
         </div>
@@ -25,11 +25,11 @@
       <div class="row">
         <div class="col-xs-12">
           <button class="btn btn-success" [disabled]="!f.valid" type="submit">
-            {{ isEditMode ? 'Update' : 'Add' }}
+            {{ isEditMode === true ? 'Update' : 'Add' }}
           </button>
           <button class="btn btn-danger"
                   (click)="onDelete()"
-                  *ngIf="isEditMode"
+                  *ngIf="isEditMode === true"
                   type="button">
             Delete
           </button>
