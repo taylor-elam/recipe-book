@@ -3,6 +3,9 @@
     <div class="spinner" *ngIf="isLoading === true">
       <app-loading-spinner></app-loading-spinner>
     </div>
+    <div class="alert alert-danger" *ngIf="error != null">
+      <p>{{ error }}</p>
+    </div>
     <div *ngIf="isLoading === false">
       <h3 *ngIf="isLoginMode === true">Log in to your account</h3>
       <h3 *ngIf="isLoginMode === false">Sign up for an account</h3>
