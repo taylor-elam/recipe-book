@@ -20,7 +20,7 @@ export class RecipeEditComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -31,7 +31,7 @@ export class RecipeEditComponent implements OnInit {
       );
   }
 
-  private initForm() {
+  private initForm(): void {
     let recipeDescription   = '';
     let recipeImagePath     = '';
     const recipeIngredients = new FormArray([]);
@@ -86,7 +86,7 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  onDeleteIngredient(index: number) {
+  onDeleteIngredient(index: number): void {
     (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 

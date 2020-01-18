@@ -16,17 +16,17 @@ export class ShoppingListService {
     return this._ingredients.slice();
   }
 
-  addIngredient(ingredient: Ingredient) {
+  addIngredient(ingredient: Ingredient): void {
     this._ingredients.push(ingredient);
     this.ingredientsUpdated.next(this.ingredients);
   }
 
-  addIngredients(ingredients: Ingredient[]) {
+  addIngredients(ingredients: Ingredient[]): void {
     this.ingredients.push(...ingredients);
     this.ingredientsUpdated.next(this.ingredients);
   }
 
-  deleteIngredient(index: number) {
+  deleteIngredient(index: number): void {
     this._ingredients.splice(index, 1);
     this.ingredientsUpdated.next(this.ingredients);
   }
@@ -35,7 +35,7 @@ export class ShoppingListService {
     return this.ingredients[index];
   }
 
-  updateIngredient(index: number, newIngredient: Ingredient) {
+  updateIngredient(index: number, newIngredient: Ingredient): void {
     this._ingredients[index] = newIngredient;
     this.ingredientsUpdated.next(this.ingredients);
   }
