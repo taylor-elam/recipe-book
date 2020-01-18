@@ -2,7 +2,7 @@ import { Component, OnInit }                                              from '
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router }                                 from '@angular/router';
 
-import { RecipesService } from '../recipe.service';
+import { RecipeService } from '../recipe.service';
 
 @Component({
   selector   : 'app-recipe-edit',
@@ -15,12 +15,12 @@ export class RecipeEditComponent implements OnInit {
   isEditMode = false;
 
   constructor(
-    private recipesService: RecipesService,
+    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params
       .subscribe(
         (params: Params) => {
@@ -31,14 +31,14 @@ export class RecipeEditComponent implements OnInit {
       );
   }
 
-  private initForm() {
+  private initForm(): void {
     let recipeDescription   = '';
     let recipeImagePath     = '';
     const recipeIngredients = new FormArray([]);
     let recipeName          = '';
 
     if (this.isEditMode === true) {
-      const recipe      = this.recipesService.getRecipe(this.id);
+      const recipe      = this.recipeService.getRecipe(this.id);
       recipeDescription = recipe.description;
       recipeImagePath   = recipe.imagePath;
       recipeName        = recipe.name;
@@ -86,15 +86,15 @@ export class RecipeEditComponent implements OnInit {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
 
-  onDeleteIngredient(index: number) {
+  onDeleteIngredient(index: number): void {
     (this.recipeForm.get('ingredients') as FormArray).removeAt(index);
   }
 
   onSubmit(): void {
     if (this.isEditMode === true) {
-      this.recipesService.updateRecipe(this.id, this.recipeForm.value);
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
     } else {
-      this.recipesService.addRecipe(this.recipeForm.value);
+      this.recipeService.addRecipe(this.recipeForm.value);
     }
   }
 }
