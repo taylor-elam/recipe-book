@@ -1,3 +1,4 @@
+import { FormsModule }   from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule }      from '@angular/core';
 
@@ -31,7 +32,8 @@ import { RecipeEditComponent } from './recipe/recipe-edit/recipe-edit.component'
   ],
   imports     : [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers   : [
     ShoppingListService
