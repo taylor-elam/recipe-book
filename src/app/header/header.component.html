@@ -28,7 +28,7 @@
           <a routerLink="/auth">Login</a>
         </li>
         <li *ngIf="isAuthenticated === true">
-          <a>Logout</a>
+          <a (click)="onLogout()">Logout</a>
         </li>
         <li class="dropdown" appDropdown *ngIf="isAuthenticated === true">
           <a class="dropdown-toggle" role="button">
