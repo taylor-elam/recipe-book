@@ -11,8 +11,7 @@ import { HeaderComponent }         from './header/header.component';
 import { RecipeModule }            from './recipe/recipe.module';
 import { DropdownDirective }       from './shared/dropdown.directive';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { ShoppingListComponent }   from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent }   from './shopping-list/shopping-edit/shopping-edit.component';
+import { ShoppingListModule }      from './shopping-list/shopping-list.module';
 import { ShoppingListService }     from './shopping-list/shopping-list.service';
 
 @NgModule({
@@ -22,15 +21,14 @@ import { ShoppingListService }     from './shopping-list/shopping-list.service';
     DropdownDirective,
     HeaderComponent,
     LoadingSpinnerComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent
   ],
   imports     : [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     FormsModule,
     HttpClientModule,
-    RecipeModule
+    RecipeModule,
+    ShoppingListModule,
   ],
   providers   : [
     ShoppingListService,
