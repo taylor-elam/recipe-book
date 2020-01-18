@@ -3,10 +3,10 @@
     <h3 *ngIf="isLoginMode === true">Log in to your account</h3>
     <h3 *ngIf="isLoginMode === false">Sign up for an account</h3>
     <p>
-      <span *ngIf="isLoginMode === true">Already have an account?</span>
-      <span *ngIf="isLoginMode === false">Don't have an account?</span>
+      <span *ngIf="isLoginMode === true">Don't have an account?</span>
+      <span *ngIf="isLoginMode === false">Already have an account?</span>
       <a (click)="onSwitchMode()">
-        {{ isLoginMode === true ? 'Login' : 'Sign up'}}
+        {{ isLoginMode === true ? 'Sign up' : 'Login'}}
       </a>
     </p>
     <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
