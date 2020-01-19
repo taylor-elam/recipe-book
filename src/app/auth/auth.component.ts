@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm }            from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm }                       from '@angular/forms';
 import { Router }            from '@angular/router';
 import { Store }             from '@ngrx/store';
-import { Observable }        from 'rxjs';
+import { Subscription }      from 'rxjs';
 
-import { AuthResponseData, AuthService } from './auth.service';
-import * as fromApp                      from '../store/app.reducer';
-import * as AuthActions                  from './store/auth.actions';
+import { AuthService }  from './auth.service';
+import * as fromApp     from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 @Component({
   selector   : 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls  : ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
+  private storeSub: Subscription;
   isLoading     = false;
   isLoginMode   = true;
   error: string = null;
@@ -25,7 +26,7 @@ export class AuthComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.store.select('auth').subscribe(authState => {
+    this.storeSub = this.store.select('auth').subscribe(authState => {
       this.isLoading = authState.isLoading;
       this.error     = authState.authError;
     });
@@ -38,15 +39,12 @@ export class AuthComponent implements OnInit {
 
     const email    = form.value.email;
     const password = form.value.password;
-    this.error     = null;
-    this.isLoading = true;
-
-    let authObs: Observable<AuthResponseData>;
+    this.store.dispatch(new AuthActions.ClearError());
 
     if (this.isLoginMode === true) {
       this.store.dispatch(new AuthActions.LoginStart({ email, password }));
     } else {
-      authObs = this.authService.signUp(email, password);
+      this.store.dispatch(new AuthActions.SignUpStart({ email, password }));
     }
 
     form.reset();
@@ -54,5 +52,11 @@ export class AuthComponent implements OnInit {
 
   onSwitchMode(): void {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  ngOnDestroy(): void {
+    if (this.store != null) {
+      this.storeSub.unsubscribe();
+    }
   }
 }
