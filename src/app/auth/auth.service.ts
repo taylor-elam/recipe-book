@@ -44,7 +44,7 @@ export class AuthService {
     const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
 
     if (loadedUser.token) {
-      this.store.dispatch(new AuthActions.Login({
+      this.store.dispatch(new AuthActions.LoginSuccess({
         email         : loadedUser.email,
         userId        : loadedUser.id,
         token         : loadedUser.token,
@@ -59,21 +59,6 @@ export class AuthService {
     this.tokenExpirationTimer = setTimeout(() => {
       this.logout();
     }, expirationDuration);
-  }
-
-  login(email: string, password: string): Observable<AuthResponseData> {
-    return this.http.post<AuthResponseData>(LOGIN_URI + environment.firebaseAPIKey,
-      {
-        email,
-        password,
-        returnSecureToken: true
-      }
-    ).pipe(
-      catchError(this.handleError),
-      tap(response => {
-        this.handleAuthentication(response.email, response.localId, response.idToken, +response.expiresIn);
-      })
-    );
   }
 
   logout(): void {
@@ -106,7 +91,7 @@ export class AuthService {
   private handleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
     const expirationDate = new Date(new Date().getTime() + (expiresIn * 1000));
     const user           = new User(email, userId, token, expirationDate);
-    this.store.dispatch(new AuthActions.Login({ email, userId, token, expirationDate }));
+    this.store.dispatch(new AuthActions.LoginSuccess({ email, userId, token, expirationDate }));
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
