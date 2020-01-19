@@ -4,9 +4,9 @@ import { Router }                                  from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { catchError, tap }                         from 'rxjs/operators';
 
-import { User } from './user.model';
+import { User }        from './user.model';
+import { environment } from '../../environments/environment';
 
-const API_KEY     = 'AIzaSyCz3A9JJysSmx9jB4HQkJIDOBT1OO3OPlU';
 const LOGIN_URI   = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
 const SIGN_UP_URI = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=';
 
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponseData> {
-    return this.http.post<AuthResponseData>(LOGIN_URI + API_KEY,
+    return this.http.post<AuthResponseData>(LOGIN_URI + environment.firebaseAPIKey,
       {
         email,
         password,
@@ -82,7 +82,7 @@ export class AuthService {
   }
 
   signUp(email: string, password: string) {
-    return this.http.post<AuthResponseData>(SIGN_UP_URI + API_KEY,
+    return this.http.post<AuthResponseData>(SIGN_UP_URI + environment.firebaseAPIKey,
       {
         email,
         password,

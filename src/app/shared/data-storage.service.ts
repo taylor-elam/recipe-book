@@ -7,6 +7,9 @@ import { AuthService } from '../auth/auth.service';
 import { Recipe }        from '../recipe/recipe.model';
 import { RecipeService } from '../recipe/recipe.service';
 
+const DATABASE_URI = 'https://recipe-book-55248.firebaseio.com/';
+const RECIPES = 'recipes.json';
+
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
   constructor(
@@ -17,7 +20,7 @@ export class DataStorageService {
 
   fetchRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(
-      'https://ng-recipe-book-16ad0.firebaseio.com/recipes.json'
+      DATABASE_URI + RECIPES
     ).pipe(
       map(response => {
         return response.map(recipe => {
@@ -35,6 +38,6 @@ export class DataStorageService {
 
   storeRecipes(): void {
     const recipes = this.recipeService.recipes;
-    this.http.put('https://ng-recipe-book-16ad0.firebaseio.com/recipes.json', recipes).subscribe();
+    this.http.put(DATABASE_URI + RECIPES, recipes).subscribe();
   }
 }

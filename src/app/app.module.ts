@@ -1,51 +1,26 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
-import { BrowserModule }                    from '@angular/platform-browser';
-import { NgModule }                         from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule }      from '@angular/forms';
+import { BrowserModule }    from '@angular/platform-browser';
+import { NgModule }         from '@angular/core';
 
-import { AppRoutingModule }        from './app-routing.module';
-import { AppComponent }            from './app.component';
-import { AuthInterceptorService }  from './auth/auth-interceptor.service';
-import { AuthComponent }           from './auth/auth.component';
-import { HeaderComponent }         from './header/header.component';
-import { RecipeComponent }         from './recipe/recipe.component';
-import { RecipeDetailComponent }   from './recipe/recipe-detail/recipe-detail.component';
-import { RecipeEditComponent }     from './recipe/recipe-edit/recipe-edit.component';
-import { RecipeListComponent }     from './recipe/recipe-list/recipe-list.component';
-import { RecipeItemComponent }     from './recipe/recipe-list/recipe-item/recipe-item.component';
-import { RecipeStartComponent }    from './recipe/recipe-start/recipe-start.component';
-import { DropdownDirective }       from './shared/dropdown.directive';
-import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import { ShoppingListComponent }   from './shopping-list/shopping-list.component';
-import { ShoppingEditComponent }   from './shopping-list/shopping-edit/shopping-edit.component';
-import { ShoppingListService }     from './shopping-list/shopping-list.service';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent }     from './app.component';
+import { CoreModule }       from './core.module';
+import { HeaderComponent }  from './header/header.component';
+import { SharedModule }     from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AuthComponent,
-    DropdownDirective,
     HeaderComponent,
-    LoadingSpinnerComponent,
-    RecipeComponent,
-    RecipeDetailComponent,
-    RecipeListComponent,
-    RecipeItemComponent,
-    ShoppingListComponent,
-    ShoppingEditComponent,
-    RecipeStartComponent,
-    RecipeEditComponent
   ],
   imports     : [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
-  ],
-  providers   : [
-    ShoppingListService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+    CoreModule,
+    SharedModule,
   ],
   bootstrap   : [AppComponent]
 })
