@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 export const AUTH_SUCCESS  = '[Auth] Login Success';
 export const AUTH_FAILURE  = '[Auth] Auth Failure';
@@ -8,53 +8,16 @@ export const LOGIN_START   = '[Auth] Login Start';
 export const LOGOUT        = '[Auth] Logout';
 export const SIGN_UP_START = '[Auth] Sign Up Start';
 
-export class AuthSuccess implements Action {
-  readonly type = AUTH_SUCCESS;
-
-  constructor(public payload: {
-    email: string,
-    userId: string,
-    token: string,
-    expirationDate: Date,
-    redirect: boolean
-  }) {}
-}
-
-export class AuthFailure implements Action {
-  readonly type = AUTH_FAILURE;
-
-  constructor(public payload: string) {}
-}
-
-export class AutoLogin implements Action {
-  readonly type = AUTO_LOGIN;
-}
-
-export class ClearError implements Action {
-  readonly type = CLEAR_ERROR;
-}
-
-export class LoginStart implements Action {
-  readonly type = LOGIN_START;
-
-  constructor(public payload: { email: string, password: string }) {}
-}
-
-export class Logout implements Action {
-  readonly type = LOGOUT;
-}
-
-export class SignUpStart implements Action {
-  readonly type = SIGN_UP_START;
-
-  constructor(public payload: { email: string, password: string }) {}
-}
-
-export type AuthActions =
-  | AuthSuccess
-  | AuthFailure
-  | AutoLogin
-  | ClearError
-  | LoginStart
-  | Logout
-  | SignUpStart;
+export const authFailure = createAction(AUTH_FAILURE, props<{ errorMessage: string }>());
+export const authSuccess = createAction(AUTH_SUCCESS, props<{
+  email: string;
+  userId: string;
+  token: string;
+  expirationDate: Date;
+  redirect: boolean
+}>());
+export const autoLogin   = createAction(AUTO_LOGIN);
+export const clearError  = createAction(CLEAR_ERROR);
+export const loginStart  = createAction(LOGIN_START, props<{ email: string, password: string }>());
+export const logout      = createAction(LOGOUT);
+export const signUpStart = createAction(SIGN_UP_START, props<{ email: string, password: string }>());

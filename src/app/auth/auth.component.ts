@@ -33,12 +33,12 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     const email    = form.value.email;
     const password = form.value.password;
-    this.store.dispatch(new AuthActions.ClearError());
+    this.store.dispatch(AuthActions.clearError());
 
     if (this.isLoginMode === true) {
-      this.store.dispatch(new AuthActions.LoginStart({ email, password }));
+      this.store.dispatch(AuthActions.loginStart({ email, password }));
     } else {
-      this.store.dispatch(new AuthActions.SignUpStart({ email, password }));
+      this.store.dispatch(AuthActions.signUpStart({ email, password }));
     }
 
     form.reset();
