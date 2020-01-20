@@ -67,20 +67,17 @@ export class AuthEffects {
         _tokenExpirationDate: string
       } = JSON.parse(localStorage.getItem('userData'));
 
-      if (userData != null) {
+      if (userData != null && userData._token) {
         const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
-
-        if (loadedUser.token) {
-          const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
-          this.authService.setLogoutTimer(expirationDuration);
-          return new AuthActions.AuthSuccess({
-            email         : loadedUser.email,
-            userId        : loadedUser.id,
-            token         : loadedUser.token,
-            expirationDate: new Date(userData._tokenExpirationDate),
-            redirect      : false
-          });
-        }
+        const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+        this.authService.setLogoutTimer(expirationDuration);
+        return new AuthActions.AuthSuccess({
+          email         : loadedUser.email,
+          userId        : loadedUser.id,
+          token         : loadedUser.token,
+          expirationDate: new Date(userData._tokenExpirationDate),
+          redirect      : false
+        });
       } else {
         return new AuthActions.Logout();
       }
