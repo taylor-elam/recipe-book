@@ -13,6 +13,7 @@ import { AppComponent }     from './app.component';
 import { AuthEffects }      from './auth/store/auth.effects';
 import { CoreModule }       from './core.module';
 import { HeaderComponent }  from './header/header.component';
+import { RecipeEffects }    from './recipe/store/recipe.effects';
 import { SharedModule }     from './shared/shared.module';
 import * as fromApp         from './store/app.reducer';
 
@@ -27,7 +28,7 @@ import * as fromApp         from './store/app.reducer';
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, RecipeEffects]),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
     CoreModule,
