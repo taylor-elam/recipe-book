@@ -1,10 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm }                       from '@angular/forms';
-import { Router }            from '@angular/router';
-import { Store }             from '@ngrx/store';
-import { Subscription }      from 'rxjs';
+import { Store }                        from '@ngrx/store';
+import { Subscription }                 from 'rxjs';
 
-import { AuthService }  from './auth.service';
 import * as fromApp     from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
 
@@ -19,11 +17,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   isLoginMode   = true;
   error: string = null;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private store: Store<fromApp.AppState>
-  ) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
     this.storeSub = this.store.select('auth').subscribe(authState => {
