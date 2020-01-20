@@ -32,15 +32,6 @@ export class RecipeService {
     this.recipesUpdated.next(this.recipes);
   }
 
-  getRecipe(index: number): Recipe {
-    return this.recipes[index];
-  }
-
-  setRecipes(recipes: Recipe[]): void {
-    this._recipes = recipes;
-    this.recipesUpdated.next(this.recipes);
-  }
-
   updateRecipe(index: number, recipe: Recipe): void {
     this._recipes[index] = recipe;
     this.recipesUpdated.next(this.recipes);
