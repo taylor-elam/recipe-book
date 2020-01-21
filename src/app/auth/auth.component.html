@@ -7,16 +7,12 @@
       <p>{{ error }}</p>
     </div>
     <div *ngIf="isLoading === false">
-      <h3 *ngIf="isLoginMode === true">Log in to your account</h3>
-      <h3 *ngIf="isLoginMode === false">Sign up for an account</h3>
-      <p>
-        <span *ngIf="isLoginMode === true">Don't have an account?</span>
-        <span *ngIf="isLoginMode === false">Already have an account?</span>
-        <a (click)="onSwitchMode()">
-          {{ isLoginMode === true ? 'Sign up' : 'Login'}}
-        </a>
-      </p>
-      <app-auth-form [isLoginMode]="isLoginMode"></app-auth-form>
+      <app-login *ngIf="isLoginMode === true"
+                 (switchToSignUp)="onSwitchMode()">
+      </app-login>
+      <app-sign-up *ngIf="isLoginMode === false"
+                   (switchToLogin)="onSwitchMode()">
+      </app-sign-up>
     </div>
   </div>
 </div>

@@ -1,15 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { NgForm }                   from '@angular/forms';
-import { Store }                    from '@ngrx/store';
-import * as fromApp                 from '../../store/app.reducer';
-import * as AuthActions             from '../store/auth.actions';
+import { Component, Input } from '@angular/core';
+import { NgForm }           from '@angular/forms';
+import { Store }            from '@ngrx/store';
+
+import * as fromApp     from '../../store/app.reducer';
+import * as AuthActions from '../store/auth.actions';
 
 @Component({
   selector   : 'app-auth-form',
   templateUrl: './auth-form.component.html',
   styleUrls  : ['./auth-form.component.scss']
 })
-export class AuthFormComponent implements OnInit {
+export class AuthFormComponent {
   @Input() isLoginMode: boolean;
 
   constructor(private store: Store<fromApp.AppState>) { }
@@ -31,6 +32,4 @@ export class AuthFormComponent implements OnInit {
 
     form.reset();
   }
-
-  ngOnInit() { }
 }
