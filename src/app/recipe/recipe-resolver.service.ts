@@ -2,7 +2,7 @@ import { Injectable }                                           from '@angular/c
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Actions, ofType }                                      from '@ngrx/effects';
 import { Store }                                                from '@ngrx/store';
-import { of }                                                   from 'rxjs';
+import { Observable, of }                                       from 'rxjs';
 import { map, switchMap, take }                                 from 'rxjs/operators';
 
 import * as fromApp       from '../store/app.reducer';
@@ -13,7 +13,10 @@ import * as RecipeActions from './store/recipe.actions';
 export class RecipesResolverService implements Resolve<Recipe[]> {
   constructor(private actions$: Actions, private store: Store<fromApp.AppState>) { }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Recipe[]> {
     return this.store.select('recipes').pipe(
       take(1),
       map(recipeState => recipeState.recipes),

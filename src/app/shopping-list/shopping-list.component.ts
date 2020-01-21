@@ -20,6 +20,10 @@ export class ShoppingListComponent implements OnInit {
     this.ingredients = this.store.select('shoppingList');
   }
 
+  onDeleteItem(index: number): void {
+    this.store.dispatch(ShoppingListActions.deleteIngredient({ index }));
+  }
+
   onEditItem(index: number): void {
     this.store.dispatch(ShoppingListActions.startEdit({ index }));
   }
