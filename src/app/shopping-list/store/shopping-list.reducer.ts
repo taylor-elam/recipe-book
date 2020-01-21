@@ -28,10 +28,10 @@ export function shoppingListReducer(shoppingListState: State | undefined, shoppi
       ...state,
       ingredients: state.ingredients.concat(...action.ingredients)
     })),
-    on(ShoppingListActions.deleteIngredient, (state: State) => ({
+    on(ShoppingListActions.deleteIngredient, (state: State, action: Interfaces.Index) => ({
       ...state,
       editedIngredientIndex: -1,
-      ingredients          : state.ingredients.filter((ingredient, index) => index !== state.editedIngredientIndex)
+      ingredients          : state.ingredients.filter((ingredient, index) => index !== action.index)
     })),
     on(ShoppingListActions.startEdit, (state: State, action: Interfaces.Index) => ({
       ...state,

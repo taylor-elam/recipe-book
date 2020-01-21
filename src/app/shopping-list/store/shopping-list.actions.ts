@@ -12,7 +12,7 @@ export const UPDATE_INGREDIENT = '[Shopping List] Update Ingredient';
 
 export const addIngredient    = createAction(ADD_INGREDIENT, props<Interfaces.Ingredient>());
 export const addIngredients   = createAction(ADD_INGREDIENTS, props<Interfaces.Ingredients>());
-export const deleteIngredient = createAction(DELETE_INGREDIENT);
+export const deleteIngredient = createAction(DELETE_INGREDIENT, props<Interfaces.Index>());
 export const startEdit        = createAction(START_EDIT, props<Interfaces.Index>());
 export const stopEdit         = createAction(STOP_EDIT);
 export const updateIngredient = createAction(UPDATE_INGREDIENT, props<Interfaces.Ingredient>());

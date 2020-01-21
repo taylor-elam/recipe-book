@@ -10,14 +10,14 @@ export class AuthService {
 
   constructor(private store: Store<fromApp.AppState>) { }
 
-  clearLogoutTimer() {
+  clearLogoutTimer(): void {
     if (this.tokenExpirationTimer != null) {
       clearTimeout(this.tokenExpirationTimer);
       this.tokenExpirationTimer = null;
     }
   }
 
-  setLogoutTimer(expirationDuration: number) {
+  setLogoutTimer(expirationDuration: number): void {
     this.tokenExpirationTimer = setTimeout(() => {
       this.store.dispatch(AuthActions.logout());
     }, expirationDuration);
