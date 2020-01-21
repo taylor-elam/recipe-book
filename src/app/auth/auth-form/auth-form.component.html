@@ -1,29 +1,98 @@
 <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
   <div class="form-group">
-    <label form="email">E-Mail</label>
+    <label for="email">E-Mail</label>
     <input class="form-control"
            id="email"
            name="email"
-           ngModel=""
+           ngModel
            required
            email
            type="email">
   </div>
   <div class="form-group">
-    <label form="password">Password</label>
+    <label for="password">Password</label>
     <input class="form-control"
            id="password"
            name="password"
            ngModel
            required
-           minlength="6"
+           minlength="8"
+           type="password">
+  </div>
+  <div class="form-group" *ngIf="isLoginMode === false">
+    <label for="password-confirmation">Confirm Password</label>
+    <input class="form-control"
+           id="password-confirmation"
+           name="passwordConf"
+           ngModel
+           required
+           minlength="8"
            type="password">
   </div>
   <div>
     <button class="btn btn-primary"
-            [disabled]="!authForm.valid"
+            [disabled]="!isFormValid(authForm)"
             type="submit">
       {{ isLoginMode === true ? 'Login' : 'Sign up'}}
     </button>
+  </div>
+  <div *ngIf="isLoginMode === false">
+    <h4>Password Requirements</h4>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value.password &&
+                   authForm.value.password.length >= 8">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value.password ||
+                   authForm.value.password.length < 8">X</span>
+      <span>A minimum of 8 characters</span>
+    </div>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value['password'] &&
+                   regex.ONE_UPPERCASE.test(authForm.value['password'])">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value['password'] ||
+                   !regex.ONE_UPPERCASE.test(authForm.value['password'])">X</span>
+      <span>An UPPERCASE letter</span>
+    </div>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value['password'] &&
+                   regex.ONE_LOWERCASE.test(authForm.value['password'])">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value['password'] ||
+                   !regex.ONE_LOWERCASE.test(authForm.value['password'])">X</span>
+      <span>A lowercase letter</span>
+    </div>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value['password'] &&
+                   regex.ONE_NUMBER.test(authForm.value['password'])">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value['password'] ||
+                   !regex.ONE_NUMBER.test(authForm.value['password'])">X</span>
+      <span>A number</span>
+    </div>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value['password'] &&
+                   regex.ONE_SYMBOL.test(authForm.value['password'])">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value['password'] ||
+                   !regex.ONE_SYMBOL.test(authForm.value['password'])">X</span>
+      <span>A symbol (! @ # $ % & * > < . ? + - =)</span>
+    </div>
+    <div>
+      <span class="password-requirement password-requirement-pass"
+            *ngIf="authForm.value['password'] &&
+                   authForm.value['passwordConf'] &&
+                   authForm.value['password'] === authForm.value['passwordConf']">✓</span>
+      <span class="password-requirement password-requirement-fail"
+            *ngIf="!authForm.value['password'] ||
+                   !authForm.value['passwordConf'] ||
+                   authForm.value['password'] !== authForm.value['passwordConf']">X</span>
+      <span>Passwords must match</span>
+    </div>
   </div>
 </form>

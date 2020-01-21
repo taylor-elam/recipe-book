@@ -1,0 +1,12 @@
+.password-requirement {
+  display: inline-block;
+  min-width: 20px;
+
+  &.password-requirement-fail {
+    color: red;
+  }
+
+  &.password-requirement-pass {
+    color: green;
+  }
+}
