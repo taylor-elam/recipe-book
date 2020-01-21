@@ -6,6 +6,7 @@ import { of }                              from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { environment }  from '../../../environments/environment';
+import * as Interfaces  from '../../shared/interfaces';
 import { AuthService }  from '../auth.service';
 import { User }         from '../user.model';
 import * as AuthActions from './auth.actions';
@@ -64,12 +65,7 @@ export class AuthEffects {
   authAutoLogin$ = createEffect(() => this.actions$.pipe(
     ofType(AuthActions.autoLogin),
     map(() => {
-      const userData: {
-        email: string,
-        id: string,
-        _token: string,
-        _tokenExpirationDate: string
-      } = JSON.parse(localStorage.getItem('userData'));
+      const userData: Interfaces.UserData = JSON.parse(localStorage.getItem('userData'));
 
       if (userData != null && userData._token) {
         const loadedUser         = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));

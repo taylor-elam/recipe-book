@@ -1,6 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Ingredient }                from '../../shared/ingredient.model';
-import * as ShoppingListActions      from './shopping-list.actions';
+
+import { Ingredient }           from '../../shared/ingredient.model';
+import * as Interfaces          from '../../shared/interfaces';
+import * as ShoppingListActions from './shopping-list.actions';
 
 export interface State {
   ingredients: Ingredient[];
@@ -18,11 +20,11 @@ const initialState: State = {
 export function shoppingListReducer(shoppingListState: State | undefined, shoppingListAction: Action): State {
   return createReducer(
     initialState,
-    on(ShoppingListActions.addIngredient, (state: State, action: { ingredient: Ingredient }) => ({
+    on(ShoppingListActions.addIngredient, (state: State, action: Interfaces.Ingredient) => ({
       ...state,
       ingredients: state.ingredients.concat(action.ingredient)
     })),
-    on(ShoppingListActions.addIngredients, (state: State, action: { ingredients: Ingredient[] }) => ({
+    on(ShoppingListActions.addIngredients, (state: State, action: Interfaces.Ingredients) => ({
       ...state,
       ingredients: state.ingredients.concat(...action.ingredients)
     })),
@@ -31,7 +33,7 @@ export function shoppingListReducer(shoppingListState: State | undefined, shoppi
       editedIngredientIndex: -1,
       ingredients          : state.ingredients.filter((ingredient, index) => index !== state.editedIngredientIndex)
     })),
-    on(ShoppingListActions.startEdit, (state: State, action: { index: number }) => ({
+    on(ShoppingListActions.startEdit, (state: State, action: Interfaces.Index) => ({
       ...state,
       editedIngredientIndex: action.index
     })),
@@ -39,7 +41,7 @@ export function shoppingListReducer(shoppingListState: State | undefined, shoppi
       ...state,
       editedIngredientIndex: -1
     })),
-    on(ShoppingListActions.updateIngredient, (state: State, action: { ingredient: Ingredient }) => ({
+    on(ShoppingListActions.updateIngredient, (state: State, action: Interfaces.Ingredient) => ({
       ...state,
       editIndex  : -1,
       ingredients: state.ingredients.map((ingredient, index) => {
