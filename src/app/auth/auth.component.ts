@@ -1,21 +1,30 @@
-import { Component }  from '@angular/core';
-import { NgForm }     from '@angular/forms';
-import { Router }     from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm }                       from '@angular/forms';
+import { Store }                        from '@ngrx/store';
+import { Subscription }                 from 'rxjs';
 
-import { AuthResponseData, AuthService } from './auth.service';
+import * as fromApp     from '../store/app.reducer';
+import * as AuthActions from './store/auth.actions';
 
 @Component({
   selector   : 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls  : ['./auth.component.scss']
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit, OnDestroy {
+  private storeSub: Subscription;
   isLoading     = false;
   isLoginMode   = true;
   error: string = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private store: Store<fromApp.AppState>) { }
+
+  ngOnInit(): void {
+    this.storeSub = this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.isLoading;
+      this.error     = authState.authError;
+    });
+  }
 
   onSubmit(form: NgForm): void {
     if (form.valid === false) {
@@ -24,31 +33,24 @@ export class AuthComponent {
 
     const email    = form.value.email;
     const password = form.value.password;
-    this.error     = null;
-    this.isLoading = true;
-
-    let authObs: Observable<AuthResponseData>;
+    this.store.dispatch(AuthActions.clearError());
 
     if (this.isLoginMode === true) {
-      authObs = this.authService.login(email, password);
+      this.store.dispatch(AuthActions.loginStart({ email, password }));
     } else {
-      authObs = this.authService.signUp(email, password);
+      this.store.dispatch(AuthActions.signUpStart({ email, password }));
     }
-
-    authObs.subscribe(
-      response => {
-        this.isLoading = false;
-        this.router.navigate(['/recipes']);
-      },
-      errorMessage => {
-        this.error     = errorMessage;
-        this.isLoading = false;
-      });
 
     form.reset();
   }
 
   onSwitchMode(): void {
     this.isLoginMode = !this.isLoginMode;
+  }
+
+  ngOnDestroy(): void {
+    if (this.store != null) {
+      this.storeSub.unsubscribe();
+    }
   }
 }
