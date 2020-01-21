@@ -14,7 +14,6 @@ import * as AuthActions from './store/auth.actions';
 export class AuthComponent implements OnInit, OnDestroy {
   private storeSub: Subscription;
   isLoading     = false;
-  isLoginMode   = true;
   error: string = null;
 
   constructor(private store: Store<fromApp.AppState>) { }
@@ -24,10 +23,6 @@ export class AuthComponent implements OnInit, OnDestroy {
       this.isLoading = authState.isLoading;
       this.error     = authState.authError;
     });
-  }
-
-  onSwitchMode(): void {
-    this.isLoginMode = !this.isLoginMode;
   }
 
   ngOnDestroy(): void {

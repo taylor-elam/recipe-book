@@ -1,16 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-login',
+  selector   : 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls  : ['./login.component.scss']
 })
-export class LoginComponent {
-  @Output() switchToSignUp = new EventEmitter();
-
-  constructor() { }
-
-  onSwitchToSignUp() {
-    this.switchToSignUp.emit();
-  }
-}
+export class LoginComponent {}

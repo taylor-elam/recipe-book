@@ -7,12 +7,7 @@
       <p>{{ error }}</p>
     </div>
     <div *ngIf="isLoading === false">
-      <app-login *ngIf="isLoginMode === true"
-                 (switchToSignUp)="onSwitchMode()">
-      </app-login>
-      <app-sign-up *ngIf="isLoginMode === false"
-                   (switchToLogin)="onSwitchMode()">
-      </app-sign-up>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

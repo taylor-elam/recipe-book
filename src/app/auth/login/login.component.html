@@ -1,6 +1,6 @@
 <h3>Log in to your account</h3>
 <p>
   <span>Don't have an account?</span>
-  <a (click)="onSwitchToSignUp()">Sign up</a>
+  <a [routerLink]="'../sign-up'">Sign up</a>
 </p>
 <app-auth-form [isLoginMode]="true"></app-auth-form>
