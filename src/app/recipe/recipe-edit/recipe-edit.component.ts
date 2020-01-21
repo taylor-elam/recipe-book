@@ -11,6 +11,7 @@ import { Store }                          from '@ngrx/store';
 import { Subscription }                   from 'rxjs';
 import { map }                            from 'rxjs/operators';
 
+import { REGEX }          from '../../shared/RegEx';
 import * as fromApp       from '../../store/app.reducer';
 import { Recipe }         from '../recipe.model';
 import * as RecipeActions from '../store/recipe.actions';
@@ -27,6 +28,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   isEditMode = false;
 
   constructor(
+    private regex: REGEX,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<fromApp.AppState>
@@ -69,7 +71,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
                   name  : new FormControl(ingredient.name, Validators.required),
                   amount: new FormControl(ingredient.amount, [
                     Validators.required,
-                    Validators.pattern(/^[1-9]+[0-9]*(\.[0-9]+)?|0\.[0-9]+$/)
+                    Validators.pattern(this.regex.DECIMALS)
                   ])
                 })
               );
@@ -96,7 +98,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         name  : new FormControl(null, Validators.required),
         amount: new FormControl(null, [
           Validators.required,
-          Validators.pattern(/^[1-9]+[0-9]*(\.[0-9]+)?|0\.[0-9]+$/)
+          Validators.pattern(this.regex.DECIMALS)
         ])
       })
     );
@@ -115,7 +117,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.store.dispatch(RecipeActions.updateRecipe({ index: this.id, recipe: this.recipeForm.value }));
       this.router.navigate(['../'], { relativeTo: this.route });
     } else {
-      this.store.dispatch(RecipeActions.addRecipe({recipe: this.recipeForm.value}));
+      this.store.dispatch(RecipeActions.addRecipe({ recipe: this.recipeForm.value }));
     }
   }
 

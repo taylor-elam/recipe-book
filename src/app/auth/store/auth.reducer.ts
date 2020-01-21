@@ -35,7 +35,7 @@ export function authReducer(authState: State | undefined, authAction: Action): S
     on(AuthActions.loginStart, AuthActions.signUpStart, (state: State) => ({
       ...state,
       authError: null,
-      loading  : true
+      isLoading  : true
     })),
     on(AuthActions.logout, (state: State) => ({
       ...state,
